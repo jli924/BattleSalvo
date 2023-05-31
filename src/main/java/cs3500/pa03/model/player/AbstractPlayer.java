@@ -8,7 +8,6 @@ import cs3500.pa03.model.ShipType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public class AbstractPlayer implements Player {
   Board board;

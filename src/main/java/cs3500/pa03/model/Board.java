@@ -120,17 +120,19 @@ public class Board {
   }
 
   public void placeBattleship(Map<ShipType, Integer> specifications) {
-    int numOfBattleships = specifications.get(ShipType.BATTLESHIP);
-    for (int i = 0; i < numOfBattleships; i++) {
-      int x = rand.nextInt(height);
-      int y = rand.nextInt(width);
-      while (!board[x][y].equals("*")) {
-        x = rand.nextInt(height);
-        y = rand.nextInt(width);
-      }
-      if (!placeShipHorizontally(x, y, ShipType.BATTLESHIP)) {
-        if (!placeShipVertically(x, y, ShipType.BATTLESHIP)) {
-          placeBattleship(specifications);
+    for (ShipType shipType : ShipType.values()) {
+      int numOfShips = specifications.get(shipType);
+      for (int i = 0; i < numOfShips; i++) {
+        int x = rand.nextInt(height);
+        int y = rand.nextInt(width);
+        while (!board[x][y].equals("*")) {
+          x = rand.nextInt(height);
+          y = rand.nextInt(width);
+        }
+        if (!placeShipHorizontally(x, y, shipType)) {
+          if (!placeShipVertically(x, y, shipType)) {
+            placeBattleship(specifications);
+          }
         }
       }
     }

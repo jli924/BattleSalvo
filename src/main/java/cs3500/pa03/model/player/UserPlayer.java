@@ -52,10 +52,10 @@ public class UserPlayer extends AbstractPlayer {
    */
   @Override
   public List<Ship> setup(int height, int width, Map<ShipType, Integer> specifications) {
-    board.placeCarrier(specifications);
+//    board.placeCarrier(specifications);
     board.placeBattleship(specifications);
-    board.placeDestroyer(specifications);
-    board.placeSubmarine(specifications);
+//    board.placeDestroyer(specifications);
+//    board.placeSubmarine(specifications);
     return new ArrayList<>();
   }
 
