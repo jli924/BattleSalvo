@@ -12,6 +12,7 @@ public class BattleSalvoModel {
 
   public void setBoard(int height, int width) {
     board = new Board(height, width);
+    user.updateBoard(height, width);
   }
 
   /**

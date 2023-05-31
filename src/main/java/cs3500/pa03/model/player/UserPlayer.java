@@ -17,7 +17,7 @@ public class UserPlayer implements Player {
   Board board;
   Random rand = new Random();
 
-  void updateBoard(int height, int width) {
+  public void updateBoard(int height, int width) {
     board = new Board(height, width);
   }
 

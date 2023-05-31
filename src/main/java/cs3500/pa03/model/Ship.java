@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class Ship {
   ShipType shipType;
-  List<Coord> coords = new ArrayList<>();
+  List<Coord> coords;
   boolean sunk;
   public Ship(ShipType shipType, List<Coord> coords, boolean sunk) {
     this.shipType = shipType;

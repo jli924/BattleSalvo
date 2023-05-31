@@ -139,7 +139,7 @@ public class Board {
       }
       if (!placeShipVertically(x, y, ShipType.DESTROYER)) {
         placeShipHorizontally(x, y, ShipType.DESTROYER);
-      }
+      } // what if we can't place a ship horizontally?
     }
   }
 
