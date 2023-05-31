@@ -19,7 +19,7 @@ public class Board {
   public void initBoard() {
     for (int row = 0; row < board.length; row++) {
       for (int col = 0; col < board[row].length; col++) {
-        board[row][col] = "o";
+        board[row][col] = "*";
       }
     }
   }
@@ -41,8 +41,9 @@ public class Board {
     boolean spaceForShip = true;
     if (x + shipType.size < this.height) {
       for (int i = 0; i < shipType.size; i++) {
-        if (!board[x + i][y].equals("o")) {
+        if (!board[x + i][y].equals("*")) {
           spaceForShip = false;
+          break;
         }
       }
       if (spaceForShip) {
@@ -53,8 +54,9 @@ public class Board {
       }
     } else if (x - shipType.size > 0) {
       for (int i = 0; i < shipType.size; i++) {
-        if (!board[x - i][y].equals("o")) {
+        if (!board[x - i][y].equals("*")) {
           spaceForShip = false;
+          break;
         }
       }
       if (spaceForShip) {
@@ -72,8 +74,9 @@ public class Board {
     boolean spaceForShip = true;
     if (y + shipType.size < this.width) {
       for (int i = 0; i < shipType.size; i++) {
-        if (!board[x][y + i].equals("o")) {
+        if (!board[x][y + i].equals("*")) {
           spaceForShip = false;
+          break;
         }
       }
       if (spaceForShip) {
@@ -84,8 +87,9 @@ public class Board {
       }
     } else if (y - shipType.size > 0) {
       for (int i = 0; i < shipType.size; i++) {
-        if (!board[x][y - i].equals("o")) {
+        if (!board[x][y - i].equals("*")) {
           spaceForShip = false;
+          break;
         }
       }
       if (spaceForShip) {
@@ -103,12 +107,14 @@ public class Board {
     for (int i = 0; i < numOfCarriers; i++) {
       int x = rand.nextInt(height);
       int y = rand.nextInt(width);
-      while (!board[x][y].equals("o")) {
+      while (!board[x][y].equals("*")) {
         x = rand.nextInt(height);
         y = rand.nextInt(width);
       }
       if (!placeShipVertically(x, y, ShipType.CARRIER)) {
-        placeShipHorizontally(x, y, ShipType.CARRIER);
+        if (!placeShipHorizontally(x, y, ShipType.CARRIER)) {
+          placeCarrier(specifications);
+        }
       }
     }
   }
@@ -118,12 +124,14 @@ public class Board {
     for (int i = 0; i < numOfBattleships; i++) {
       int x = rand.nextInt(height);
       int y = rand.nextInt(width);
-      while (!board[x][y].equals("o")) {
+      while (!board[x][y].equals("*")) {
         x = rand.nextInt(height);
         y = rand.nextInt(width);
       }
-      if (!placeShipVertically(x, y, ShipType.BATTLESHIP)) {
-        placeShipHorizontally(x, y, ShipType.BATTLESHIP);
+      if (!placeShipHorizontally(x, y, ShipType.BATTLESHIP)) {
+        if (!placeShipVertically(x, y, ShipType.BATTLESHIP)) {
+          placeBattleship(specifications);
+        }
       }
     }
   }
@@ -133,12 +141,14 @@ public class Board {
     for (int i = 0; i < numOfDestroyers; i++) {
       int x = rand.nextInt(height);
       int y = rand.nextInt(width);
-      while (!board[x][y].equals("o")) {
+      while (!board[x][y].equals("*")) {
         x = rand.nextInt(height);
         y = rand.nextInt(width);
       }
       if (!placeShipVertically(x, y, ShipType.DESTROYER)) {
-        placeShipHorizontally(x, y, ShipType.DESTROYER);
+        if (!placeShipHorizontally(x, y, ShipType.DESTROYER)) {
+          placeDestroyer(specifications);
+        }
       } // what if we can't place a ship horizontally?
     }
   }
@@ -148,12 +158,14 @@ public class Board {
     for (int i = 0; i < numOfSubmarines; i++) {
       int x = rand.nextInt(height);
       int y = rand.nextInt(width);
-      while (!board[x][y].equals("o")) {
+      while (!board[x][y].equals("*")) {
         x = rand.nextInt(height);
         y = rand.nextInt(width);
       }
-      if (!placeShipVertically(x, y, ShipType.SUBMARINE)) {
-        placeShipHorizontally(x, y, ShipType.SUBMARINE);
+      if (!placeShipHorizontally(x, y, ShipType.SUBMARINE)) {
+        if (!placeShipVertically(x, y, ShipType.SUBMARINE)) {
+          placeSubmarine(specifications);
+        }
       }
     }
   }

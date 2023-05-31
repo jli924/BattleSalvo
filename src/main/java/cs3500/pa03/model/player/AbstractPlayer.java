@@ -10,24 +10,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-/**
- * Represents the User player
- */
-public class UserPlayer extends AbstractPlayer {
+public class AbstractPlayer implements Player {
   Board board;
-  Board opponentBoard;
 
-  public void updateBoards(int height, int width) {
+  public void updateBoard(int height, int width) {
     board = new Board(height, width);
-    opponentBoard = new Board(height, width);
   }
 
   public String[][] getBoard() {
     return board.getBoard();
-  }
-
-  public String[][] getOpponentBoard() {
-    return opponentBoard.getBoard();
   }
 
   /**
@@ -37,7 +28,7 @@ public class UserPlayer extends AbstractPlayer {
    */
   @Override
   public String name() {
-    return "Jamie Li";
+    return "";
   }
 
   /**

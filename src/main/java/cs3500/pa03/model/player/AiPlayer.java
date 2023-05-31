@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Represents the AI player
  */
-public class AiPlayer implements Player {
+public class AiPlayer extends AbstractPlayer {
   /**
    * Get the player's name.
    *
@@ -18,21 +18,6 @@ public class AiPlayer implements Player {
    */
   @Override
   public String name() {
-    return null;
-  }
-
-  /**
-   * Given the specifications for a BattleSalvo board, return a list of ships with their locations
-   * on the board.
-   *
-   * @param height         the height of the board, range: [6, 15] inclusive
-   * @param width          the width of the board, range: [6, 15] inclusive
-   * @param specifications a map of ship type to the number of occurrences each ship should
-   *                       appear on the board
-   * @return the placements of each ship on the board
-   */
-  @Override
-  public List<Ship> setup(int height, int width, Map<ShipType, Integer> specifications) {
     return null;
   }
 

@@ -103,5 +103,7 @@ public class BattleSalvoController {
     while (!validFleetSize) {
       validFleetSize = checkFleetSize(sc.next(), sc.next(), sc.next(), sc.next());
     }
+    view.showOpponentBoard(model.getOpponentBoard());
+    view.showMyBoard(model.getUserBoard());
   }
 }

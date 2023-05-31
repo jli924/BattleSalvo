@@ -1,6 +1,7 @@
 package cs3500.pa03.model;
 
 import cs3500.pa03.model.player.AiPlayer;
+import cs3500.pa03.model.player.Player;
 import cs3500.pa03.model.player.UserPlayer;
 import java.util.HashMap;
 
@@ -12,7 +13,15 @@ public class BattleSalvoModel {
 
   public void setBoard(int height, int width) {
     board = new Board(height, width);
-    user.updateBoard(height, width);
+    user.updateBoards(height, width);
+  }
+
+  public String[][] getOpponentBoard() {
+    return user.getOpponentBoard();
+  }
+
+  public String[][] getUserBoard() {
+    return user.getBoard();
   }
 
   /**

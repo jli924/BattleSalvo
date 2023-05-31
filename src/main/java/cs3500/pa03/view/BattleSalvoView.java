@@ -86,4 +86,40 @@ public class BattleSalvoView {
       System.out.println("Something broke...");
     }
   }
+
+  /**
+   * Shows the opponent's board
+   */
+  public void showOpponentBoard(String[][] board) {
+    try {
+      this.output.append("Opponent board:\n");
+      for (int row = 0; row < board.length; row++) {
+        for (int col = 0; col < board[row].length; col++) {
+          this.output.append(board[row][col] + " ");
+        }
+        this.output.append("\n");
+      }
+      this.output.append("\n");
+    } catch (IOException e) {
+      System.out.println("Something broke...");
+    }
+  }
+
+  /**
+   * Shows the user's board
+   */
+  public void showMyBoard(String[][] board) {
+    try {
+      this.output.append("Your board:\n");
+      for (int row = 0; row < board.length; row++) {
+        for (int col = 0; col < board[row].length; col++) {
+          this.output.append(board[row][col] + " ");
+        }
+        this.output.append("\n");
+      }
+      this.output.append("\n");
+    } catch (IOException e) {
+      System.out.println("Something broke...");
+    }
+  }
 }
