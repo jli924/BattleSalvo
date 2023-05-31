@@ -1,5 +1,6 @@
 package cs3500.pa03.controller;
 
+import cs3500.pa03.model.BattleSalvoModel;
 import cs3500.pa03.view.BattleSalvoView;
 import java.io.InputStreamReader;
 import java.util.Scanner;
@@ -8,6 +9,7 @@ import java.util.Scanner;
  * BattleSalvo's controller
  */
 public class BattleSalvoController {
+  BattleSalvoModel model;
   BattleSalvoView view;
   Readable input;
   int fleetSize;
@@ -16,6 +18,7 @@ public class BattleSalvoController {
    * Constructor
    */
   public BattleSalvoController() {
+    this.model = new BattleSalvoModel();
     this.view = new BattleSalvoView(System.out);
     this.input = new InputStreamReader(System.in);
   }
@@ -42,6 +45,7 @@ public class BattleSalvoController {
       view.invalidBoardDimensions();
       return false;
     } else {
+      model.setBoard(boardHeight, boardWidth);
       fleetSize = Math.min(boardHeight, boardWidth);
       return true;
     }
@@ -79,6 +83,7 @@ public class BattleSalvoController {
       view.atLeastOneOfEachShip(fleetSize);
       return false;
     } else {
+      model.setUpShips(numOfCarrier, numOfBattleship, numOfDestroyer, numOfSubmarine);
       return true;
     }
   }

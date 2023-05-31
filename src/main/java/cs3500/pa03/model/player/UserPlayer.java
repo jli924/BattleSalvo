@@ -1,16 +1,26 @@
 package cs3500.pa03.model.player;
 
+import cs3500.pa03.model.Board;
 import cs3500.pa03.model.Coord;
 import cs3500.pa03.model.GameResult;
 import cs3500.pa03.model.Ship;
 import cs3500.pa03.model.ShipType;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Represents the User player
  */
 public class UserPlayer implements Player {
+  Board board;
+  Random rand = new Random();
+
+  void updateBoard(int height, int width) {
+    board = new Board(height, width);
+  }
+
   /**
    * Get the player's name.
    *
@@ -18,7 +28,7 @@ public class UserPlayer implements Player {
    */
   @Override
   public String name() {
-    return null;
+    return "Jamie Li";
   }
 
   /**
@@ -33,7 +43,11 @@ public class UserPlayer implements Player {
    */
   @Override
   public List<Ship> setup(int height, int width, Map<ShipType, Integer> specifications) {
-    return null;
+    board.placeCarrier(specifications);
+    board.placeBattleship(specifications);
+    board.placeDestroyer(specifications);
+    board.placeSubmarine(specifications);
+    return new ArrayList<>();
   }
 
   /**
