@@ -92,8 +92,10 @@ public class BattleSalvoView {
    */
   public void showOpponentBoard(String[][] board) {
     try {
+      this.output.append("------------------------------------------------------\n");
       this.output.append("Opponent board:\n");
       for (int row = 0; row < board.length; row++) {
+        this.output.append("     ");
         for (int col = 0; col < board[row].length; col++) {
           this.output.append(board[row][col] + " ");
         }
@@ -112,12 +114,13 @@ public class BattleSalvoView {
     try {
       this.output.append("Your board:\n");
       for (int row = 0; row < board.length; row++) {
+        this.output.append("     ");
         for (int col = 0; col < board[row].length; col++) {
           this.output.append(board[row][col] + " ");
         }
         this.output.append("\n");
       }
-      this.output.append("\n");
+      this.output.append("------------------------------------------------------\n");
     } catch (IOException e) {
       System.out.println("Something broke...");
     }
