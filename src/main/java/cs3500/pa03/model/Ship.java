@@ -1,6 +1,5 @@
 package cs3500.pa03.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,5 +13,9 @@ public class Ship {
     this.shipType = shipType;
     this.coords = coords;
     this.sunk = sunk;
+  }
+
+  public boolean isSunk() {
+    return sunk;
   }
 }

@@ -1,7 +1,6 @@
 package cs3500.pa03.model;
 
 import cs3500.pa03.model.player.AiPlayer;
-import cs3500.pa03.model.player.Player;
 import cs3500.pa03.model.player.UserPlayer;
 import java.util.HashMap;
 
@@ -36,6 +35,7 @@ public class BattleSalvoModel {
 
   public void setUpShips(int carrier, int battleship, int destroyer, int submarine) {
     setSpecifications(carrier, battleship, destroyer, submarine);
-    user.setup(board.getHeight(), board.getWidth(), specifications);
+    user.setShips(board.getHeight(), board.getWidth(), specifications);
+    user.setNumOfShots(user.getShips());
   }
 }

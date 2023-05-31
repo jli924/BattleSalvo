@@ -8,7 +8,6 @@ import cs3500.pa03.model.ShipType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * Represents the User player
@@ -16,6 +15,8 @@ import java.util.Random;
 public class UserPlayer extends AbstractPlayer {
   Board board;
   Board opponentBoard;
+  int numOfShots = 0;
+  List<Ship> ships = new ArrayList<>();
 
   public void updateBoards(int height, int width) {
     board = new Board(height, width);
@@ -28,6 +29,22 @@ public class UserPlayer extends AbstractPlayer {
 
   public String[][] getOpponentBoard() {
     return opponentBoard.getBoard();
+  }
+
+  public void setNumOfShots(List<Ship> ships) {
+    for (int i = 0; i < ships.size(); i++) {
+      if (!ships.get(i).isSunk()) {
+        this.numOfShots++;
+      }
+    }
+  }
+
+  public List<Ship> getShips() {
+    return this.ships;
+  }
+
+  public void setShips(int height, int width, Map<ShipType, Integer> specifications) {
+    this.ships = setup(height, width, specifications);
   }
 
   /**
@@ -53,10 +70,9 @@ public class UserPlayer extends AbstractPlayer {
   @Override
   public List<Ship> setup(int height, int width, Map<ShipType, Integer> specifications) {
 //    board.placeCarrier(specifications);
-    board.placeBattleship(specifications);
 //    board.placeDestroyer(specifications);
 //    board.placeSubmarine(specifications);
-    return new ArrayList<>();
+    return board.placeShip(specifications);
   }
 
   /**

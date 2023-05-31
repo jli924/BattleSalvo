@@ -1,5 +1,6 @@
 package cs3500.pa03.model;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 
@@ -36,7 +37,8 @@ public class Board {
     return this.width;
   }
 
-  public boolean placeShipVertically(int x, int y, ShipType shipType) {
+  public boolean placeShipVertically(int x, int y, ShipType shipType, ArrayList<Ship> ships) {
+    ArrayList<Coord> coords = new ArrayList<>();
     boolean foundSpace = false;
     boolean spaceForShip = true;
     if (x + shipType.size < this.height) {
@@ -49,7 +51,9 @@ public class Board {
       if (spaceForShip) {
         for (int i = 0; i < shipType.size; i++) {
           board[x + i][y] = shipType.symbol;
+          coords.add(new Coord(x + i, y));
         }
+        ships.add(new Ship(shipType, coords, false));
         foundSpace = true;
       }
     } else if (x - shipType.size > 0) {
@@ -62,14 +66,17 @@ public class Board {
       if (spaceForShip) {
         for (int i = 0; i < shipType.size; i++) {
           board[x - i][y] = shipType.symbol;
+          coords.add(new Coord(x - i, y));
         }
+        ships.add(new Ship(shipType, coords, false));
         foundSpace = true;
       }
     }
     return foundSpace;
   }
 
-  public boolean placeShipHorizontally(int x, int y, ShipType shipType) {
+  public boolean placeShipHorizontally(int x, int y, ShipType shipType, ArrayList<Ship> ships) {
+    ArrayList<Coord> coords = new ArrayList<>();
     boolean foundSpace = false;
     boolean spaceForShip = true;
     if (y + shipType.size < this.width) {
@@ -82,7 +89,9 @@ public class Board {
       if (spaceForShip) {
         for (int i = 0; i < shipType.size; i++) {
           board[x][y + i] = shipType.symbol;
+          coords.add(new Coord(x, y + i));
         }
+        ships.add(new Ship(shipType, coords, false));
         foundSpace = true;
       }
     } else if (y - shipType.size > 0) {
@@ -95,31 +104,34 @@ public class Board {
       if (spaceForShip) {
         for (int i = 0; i < shipType.size; i++) {
           board[x][y - i] = shipType.symbol;
+          coords.add(new Coord(x, y - i));
         }
+        ships.add(new Ship(shipType, coords, false));
         foundSpace = true;
       }
     }
     return foundSpace;
   }
 
-  public void placeCarrier(Map<ShipType, Integer> specifications) {
-    int numOfCarriers = specifications.get(ShipType.CARRIER);
-    for (int i = 0; i < numOfCarriers; i++) {
-      int x = rand.nextInt(height);
-      int y = rand.nextInt(width);
-      while (!board[x][y].equals("*")) {
-        x = rand.nextInt(height);
-        y = rand.nextInt(width);
-      }
-      if (!placeShipVertically(x, y, ShipType.CARRIER)) {
-        if (!placeShipHorizontally(x, y, ShipType.CARRIER)) {
-          placeCarrier(specifications);
-        }
-      }
-    }
-  }
+//  public void placeCarrier(Map<ShipType, Integer> specifications) {
+//    int numOfCarriers = specifications.get(ShipType.CARRIER);
+//    for (int i = 0; i < numOfCarriers; i++) {
+//      int x = rand.nextInt(height);
+//      int y = rand.nextInt(width);
+//      while (!board[x][y].equals("*")) {
+//        x = rand.nextInt(height);
+//        y = rand.nextInt(width);
+//      }
+//      if (!placeShipVertically(x, y, ShipType.CARRIER)) {
+//        if (!placeShipHorizontally(x, y, ShipType.CARRIER)) {
+//          placeCarrier(specifications);
+//        }
+//      }
+//    }
+//  }
 
-  public void placeBattleship(Map<ShipType, Integer> specifications) {
+  public ArrayList<Ship> placeShip(Map<ShipType, Integer> specifications) {
+    ArrayList<Ship> ships = new ArrayList<>();
     for (ShipType shipType : ShipType.values()) {
       int numOfShips = specifications.get(shipType);
       for (int i = 0; i < numOfShips; i++) {
@@ -129,46 +141,13 @@ public class Board {
           x = rand.nextInt(height);
           y = rand.nextInt(width);
         }
-        if (!placeShipHorizontally(x, y, shipType)) {
-          if (!placeShipVertically(x, y, shipType)) {
-            placeBattleship(specifications);
+        if (!placeShipHorizontally(x, y, shipType, ships)) {
+          if (!placeShipVertically(x, y, shipType, ships)) {
+            placeShip(specifications);
           }
         }
       }
     }
-  }
-
-  public void placeDestroyer(Map<ShipType, Integer> specifications) {
-    int numOfDestroyers = specifications.get(ShipType.DESTROYER);
-    for (int i = 0; i < numOfDestroyers; i++) {
-      int x = rand.nextInt(height);
-      int y = rand.nextInt(width);
-      while (!board[x][y].equals("*")) {
-        x = rand.nextInt(height);
-        y = rand.nextInt(width);
-      }
-      if (!placeShipVertically(x, y, ShipType.DESTROYER)) {
-        if (!placeShipHorizontally(x, y, ShipType.DESTROYER)) {
-          placeDestroyer(specifications);
-        }
-      }
-    }
-  }
-
-  public void placeSubmarine(Map<ShipType, Integer> specifications) {
-    int numOfSubmarines = specifications.get(ShipType.SUBMARINE);
-    for (int i = 0; i < numOfSubmarines; i++) {
-      int x = rand.nextInt(height);
-      int y = rand.nextInt(width);
-      while (!board[x][y].equals("*")) {
-        x = rand.nextInt(height);
-        y = rand.nextInt(width);
-      }
-      if (!placeShipHorizontally(x, y, ShipType.SUBMARINE)) {
-        if (!placeShipVertically(x, y, ShipType.SUBMARINE)) {
-          placeSubmarine(specifications);
-        }
-      }
-    }
+    return ships;
   }
 }

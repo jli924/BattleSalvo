@@ -125,4 +125,16 @@ public class BattleSalvoView {
       System.out.println("Something broke...");
     }
   }
+
+  /**
+   * Asks the user for shots
+   */
+  public void requestShots(int ships) {
+    try {
+      this.output.append("Please enter" + ships + "shots:\n");
+      this.output.append("------------------------------------------------------\n");
+    } catch (IOException e) {
+      System.out.println("Something broke...");
+    }
+  }
 }
