@@ -10,6 +10,10 @@ public enum ShipType {
   SUBMARINE(3, "S");
   public final int size;
   public final String symbol;
+
+  /**
+   * Constructor
+   */
   ShipType(int size, String symbol) {
     this.size = size;
     this.symbol = symbol;

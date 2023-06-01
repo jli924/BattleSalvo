@@ -1,16 +1,24 @@
 package cs3500.pa03.model.player;
 
+import cs3500.pa03.model.Board;
 import cs3500.pa03.model.Coord;
 import cs3500.pa03.model.GameResult;
-import cs3500.pa03.model.Ship;
-import cs3500.pa03.model.ShipType;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Represents the AI player
  */
 public class AiPlayer extends AbstractPlayer {
+
+  /**
+   * Get the AI's board
+   *
+   * @return the board
+   */
+  public Board getAiBoard() {
+    return board;
+  }
+
   /**
    * Get the player's name.
    *
@@ -18,7 +26,7 @@ public class AiPlayer extends AbstractPlayer {
    */
   @Override
   public String name() {
-    return null;
+    return "AI Player";
   }
 
   /**
@@ -29,20 +37,10 @@ public class AiPlayer extends AbstractPlayer {
    */
   @Override
   public List<Coord> takeShots() {
-    return null;
-  }
-
-  /**
-   * Given the list of shots the opponent has fired on this player's board, report which
-   * shots hit a ship on this player's board.
-   *
-   * @param opponentShotsOnBoard the opponent's shots on this player's board
-   * @return a filtered list of the given shots that contain all locations of shots that hit a
-   * ship on this board
-   */
-  @Override
-  public List<Coord> reportDamage(List<Coord> opponentShotsOnBoard) {
-    return null;
+    for (int i = 0; i < numOfShots; i++) {
+      shotsTaken.add(board.takeRandomShot());
+    }
+    return shotsTaken;
   }
 
   /**

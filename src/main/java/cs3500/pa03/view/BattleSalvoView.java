@@ -20,7 +20,7 @@ public class BattleSalvoView {
    */
   public void welcomeScreen() {
     try {
-      this.output.append("Welcome to OOD BattleSalvo!!\n"
+      this.output.append("\nWelcome to OOD BattleSalvo!!\n"
           + "Please enter a valid board height and width below:\n"
           + "------------------------------------------------------\n");
     } catch (IOException e) {
@@ -131,7 +131,22 @@ public class BattleSalvoView {
    */
   public void requestShots(int ships) {
     try {
-      this.output.append("Please enter" + ships + "shots:\n");
+      this.output.append("Please enter " + ships + " shots:\n");
+      this.output.append("------------------------------------------------------\n");
+    } catch (IOException e) {
+      System.out.println("Something broke...");
+    }
+  }
+
+  /**
+   * Notifies the user one of their shots was invalid
+   */
+  public void invalidShot() {
+    try {
+      this.output.append("------------------------------------------------------\n");
+      this.output.append("You entered an invalid shot!\n");
+      this.output.append("Remember, shots must be within board dimensions - 1!\n");
+      this.output.append("Try again! :)\n");
       this.output.append("------------------------------------------------------\n");
     } catch (IOException e) {
       System.out.println("Something broke...");

@@ -24,6 +24,33 @@ public class BattleSalvoController {
   }
 
   /**
+   * To handle the user's shots
+   *
+   * @param x the x coordinate of the shot
+   * @param y the y coordinate of the shot
+   *
+   * @return a Boolean of whether the input was valid
+   */
+  public boolean handleShots(String x, String y) {
+    int xCoord;
+    int yCoord;
+    try {
+      xCoord = Integer.parseInt(x);
+      yCoord = Integer.parseInt(y);
+    } catch (NumberFormatException e) {
+      view.invalidShot();
+      return false;
+    }
+    if (xCoord > model.getBoard().getHeight() - 1 || yCoord > model.getBoard().getWidth() - 1) {
+      view.invalidShot();
+      return false;
+    } else {
+      model.handleShots(xCoord, yCoord);
+      return true;
+    }
+  }
+
+  /**
    * Checks whether valid board dimensions were given
    *
    * @param height the height the user entered
@@ -84,6 +111,7 @@ public class BattleSalvoController {
       return false;
     } else {
       model.setUpShips(numOfCarrier, numOfBattleship, numOfDestroyer, numOfSubmarine);
+      model.setShots();
       return true;
     }
   }
@@ -93,17 +121,28 @@ public class BattleSalvoController {
    */
   public void run() {
     Scanner sc = new Scanner(this.input);
+    // welcome the user
     view.welcomeScreen();
-    boolean validBoardInput = false;
-    while(!validBoardInput) {
-      validBoardInput = checkBoardDimensions(sc.next(), sc.next());
+    boolean validInput = false;
+    while(!validInput) {
+      validInput = checkBoardDimensions(sc.next(), sc.next());
     }
+    validInput = false;
     view.askForFleetSize(fleetSize);
-    boolean validFleetSize = false;
-    while (!validFleetSize) {
-      validFleetSize = checkFleetSize(sc.next(), sc.next(), sc.next(), sc.next());
+    while (!validInput) {
+      validInput= checkFleetSize(sc.next(), sc.next(), sc.next(), sc.next());
     }
-    view.showOpponentBoard(model.getOpponentBoard());
+    validInput = false;
+    view.showOpponentBoard(model.getAiBoard());
     view.showMyBoard(model.getUserBoard());
+    view.requestShots(model.getNumOfShots());
+    while (!validInput) {
+      for (int i = 0; i < model.getNumOfShots(); i++) {
+        validInput = handleShots(sc.next(), sc.next());
+      }
+    }
+    validInput = false;
+    // here, make a loop to let the players play until one lose!
+    // AI shots aren't being taken correctly FYI
   }
 }

@@ -9,15 +9,74 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class AbstractPlayer implements Player {
+/**
+ * To represent a player
+ */
+abstract class AbstractPlayer implements Player {
   Board board;
+  int numOfShots = 0;
+  List<Ship> ships = new ArrayList<>();
+  List<Coord> shotsTaken = new ArrayList<>();
 
-  public void updateBoard(int height, int width) {
-    board = new Board(height, width);
+  /**
+   * To update the player's board
+   *
+   * @param height the height of the board
+   * @param width the width of the board
+   */
+  public void updateBoards(int height, int width) {
+    this.board = new Board(height, width);
   }
 
+  /**
+   * To get a player's board (the array, board)
+   *
+   * @return an array (the board)
+   */
   public String[][] getBoard() {
     return board.getBoard();
+  }
+
+  /**
+   * To set the number of shots a player has
+   *
+   * @param ships the list of ships that a player has
+   */
+  public void setNumOfShots(List<Ship> ships) {
+    for (Ship ship : ships) {
+      if (!ship.isSunk()) {
+        this.numOfShots++;
+      }
+    }
+  }
+
+  /**
+   * To get the number of shots a user has
+   *
+   * @return an int of the number of shots a player has
+   */
+  public int getNumOfShots() {
+    return numOfShots;
+  }
+
+  /**
+   * To get the list of ships a user has
+   *
+   * @return that list of ships
+   */
+  public List<Ship> getShips() {
+    return this.ships;
+  }
+
+  /**
+   * To set the list of ships for a player
+   *
+   * @param height the height of the board
+   * @param width the width of the board
+   * @param specifications the map of ships to how many the user selected
+   */
+  public void setShips(int height, int width, Map<ShipType, Integer> specifications) {
+    this.ships = setup(height, width, specifications);
   }
 
   /**
@@ -26,9 +85,7 @@ public class AbstractPlayer implements Player {
    * @return the player's name
    */
   @Override
-  public String name() {
-    return "";
-  }
+  abstract public String name();
 
   /**
    * Given the specifications for a BattleSalvo board, return a list of ships with their locations
@@ -42,11 +99,7 @@ public class AbstractPlayer implements Player {
    */
   @Override
   public List<Ship> setup(int height, int width, Map<ShipType, Integer> specifications) {
-//    board.placeCarrier(specifications);
-//    board.placeBattleship(specifications);
-//    board.placeDestroyer(specifications);
-//    board.placeSubmarine(specifications);
-    return new ArrayList<>();
+    return board.placeShip(specifications);
   }
 
   /**
@@ -57,7 +110,7 @@ public class AbstractPlayer implements Player {
    */
   @Override
   public List<Coord> takeShots() {
-    return null;
+    return this.shotsTaken;
   }
 
   /**
@@ -70,7 +123,7 @@ public class AbstractPlayer implements Player {
    */
   @Override
   public List<Coord> reportDamage(List<Coord> opponentShotsOnBoard) {
-    return null;
+    return board.updateDamage(opponentShotsOnBoard);
   }
 
   /**
