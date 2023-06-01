@@ -5,6 +5,7 @@ import cs3500.pa03.model.Coord;
 import cs3500.pa03.model.GameResult;
 import cs3500.pa03.model.Ship;
 import cs3500.pa03.model.ShipType;
+import cs3500.pa03.view.BattleSalvoView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,21 +15,24 @@ import java.util.Map;
  */
 abstract class AbstractPlayer implements Player {
   Board board;
-  int numOfShots = 0;
+  //int numOfShots = 0;
+  Board opponentBoard;
   List<Ship> ships = new ArrayList<>();
   List<Coord> shotsTaken = new ArrayList<>();
-  public AbstractPlayer(int height, int width) {
-    this.board = new Board(height, width);
+  BattleSalvoView view = new BattleSalvoView(System.out);
+  public AbstractPlayer(Board board, Board opponentBoard) {
+    this.board = board;
+    this.opponentBoard = opponentBoard;
   }
 
-  /**
-   * To get a player's board (the array, board)
-   *
-   * @return an array (the board)
-   */
-  public String[][] getBoard() {
-    return board.getBoard();
-  }
+//  /**
+//   * To get a player's board (the array, board)
+//   *
+//   * @return an array (the board)
+//   */
+//  public String[][] getBoard() {
+//    return board.getBoard();
+//  }
 
 //  /**
 //   * To set the number of shots a player has
@@ -106,10 +110,13 @@ abstract class AbstractPlayer implements Player {
    */
   @Override
   public List<Coord> takeShots() {
+    List<Coord> shots;
     for (int i = 0; i < this.ships.size(); i++) {
       shotsTaken.add(board.takeRandomShot());
     }
-    return shotsTaken;
+    shots = shotsTaken;
+    shotsTaken.clear();
+    return shots;
   }
 
   /**
@@ -122,7 +129,13 @@ abstract class AbstractPlayer implements Player {
    */
   @Override
   public List<Coord> reportDamage(List<Coord> opponentShotsOnBoard) {
-    return board.updateDamage(opponentShotsOnBoard);
+    List<Coord> shotsHit = board.updateDamage(opponentShotsOnBoard);
+    for (Ship ship : ships) {
+      if (ship.checkIfSunk()) {
+        ships.remove(ship);
+      }
+    }
+    return shotsHit;
   }
 
   /**
@@ -133,7 +146,13 @@ abstract class AbstractPlayer implements Player {
    */
   @Override
   public void successfulHits(List<Coord> shotsThatHitOpponentShips) {
-
+    for (Coord coord : shotsTaken) {
+      if (shotsThatHitOpponentShips.contains(coord)) {
+        opponentBoard.replaceAtCoord(coord, "X");
+      } else {
+        opponentBoard.replaceAtCoord(coord, "0");
+      }
+    }
   }
 
   /**
@@ -145,6 +164,6 @@ abstract class AbstractPlayer implements Player {
    */
   @Override
   public void endGame(GameResult result, String reason) {
-
+    view.gameOver(reason);
   }
 }

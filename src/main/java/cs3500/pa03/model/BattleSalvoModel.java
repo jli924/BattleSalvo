@@ -1,6 +1,7 @@
 package cs3500.pa03.model;
 
 import cs3500.pa03.model.player.AiPlayer;
+import cs3500.pa03.model.player.Player;
 import cs3500.pa03.model.player.UserPlayer;
 import java.util.HashMap;
 
@@ -10,21 +11,17 @@ import java.util.HashMap;
 public class BattleSalvoModel {
   AiPlayer ai;
   UserPlayer user;
-  Board board;
+  Board userBoard;
+  Board opponentBoard;
+  Board aiBoard;
+  GameResult result;
   private HashMap<ShipType, Integer> specifications = new HashMap<>();
-
-  /**
-   * Sets the board height and width
-   *
-   * @param height of the board
-   * @param width of the board
-   */
-  public void setBoard(int height, int width) {
-    board = new Board(height, width);
-    user = new UserPlayer(height, width);
-    ai = new AiPlayer(height, width);
-//    user.updateBoards(height, width);
-//    ai.updateBoards(height, width);
+  public BattleSalvoModel(int height, int width) {
+    userBoard = new Board(height, width);
+    opponentBoard = new Board(height, width);
+    aiBoard = new Board(height, width);
+    user = new UserPlayer(userBoard, opponentBoard);
+    ai = new AiPlayer(aiBoard, userBoard);
   }
 
   /**
@@ -33,7 +30,7 @@ public class BattleSalvoModel {
    * @return an array representing the board
    */
   public String[][] getAiBoard() {
-    return ai.getBoard();
+    return opponentBoard.getBoard();
   }
 
   /**
@@ -42,14 +39,14 @@ public class BattleSalvoModel {
    * @return an array representing the board
    */
    public String[][] getUserBoard() {
-    return user.getBoard();
+    return userBoard.getBoard();
   }
 
   /**
    * Gets the board (mostly used for height and width)
    */
    public Board getBoard() {
-    return board;
+    return userBoard;
   }
 
   /**
@@ -60,7 +57,7 @@ public class BattleSalvoModel {
    * @param destroyer the number of destroyers the user chose
    * @param submarine the number of submarines the user chose
    */
-  public void setSpecifications(int carrier, int battleship, int destroyer, int submarine) {
+  private void setSpecifications(int carrier, int battleship, int destroyer, int submarine) {
     specifications.put(ShipType.CARRIER, carrier);
     specifications.put(ShipType.BATTLESHIP, battleship);
     specifications.put(ShipType.DESTROYER, destroyer);
@@ -77,26 +74,26 @@ public class BattleSalvoModel {
    */
   public void setUpShips(int carrier, int battleship, int destroyer, int submarine) {
     setSpecifications(carrier, battleship, destroyer, submarine);
-    user.setup(board.getHeight(), board.getWidth(), specifications);
-    ai.setup(board.getHeight(), board.getWidth(), specifications);
+    user.setup(userBoard.getHeight(), userBoard.getWidth(), specifications);
+    ai.setup(aiBoard.getHeight(), aiBoard.getWidth(), specifications);
   }
-
-//  /**
-//   * Sets the number of shots for both players
-//   */
-//  public void setShots() {
-//    user.setNumOfShots(user.getShips());
-//    ai.setNumOfShots(ai.getShips());
-//  }
 
   /**
    * Get the player's number of shots
    *
    * @return the number of shots
    */
-  public int getNumOfShots() {
-    return user.setup(board.getHeight(), board.getWidth(), specifications).size();
-//    return user.getNumOfShots();
+  public int getUserNumOfShots() {
+    return user.setup(userBoard.getHeight(), userBoard.getWidth(), specifications).size();
+  }
+
+  /**
+   * Get the AI's number of shots
+   *
+   * @return the number of shots
+   */
+  public int getAiNumOfShots() {
+    return ai.takeShots().size();
   }
 
   /**
@@ -113,7 +110,15 @@ public class BattleSalvoModel {
    * Reports both player's damage
    */
   public void reportPlayerDamage() {
-    user.reportDamage(ai.takeShots());
-    ai.reportDamage(user.takeShots());
+    user.successfulHits(ai.reportDamage(user.takeShots()));
+    ai.successfulHits(user.reportDamage(ai.takeShots()));
+  }
+
+  public Player getUser() {
+    return user;
+  }
+
+  public Player getAi() {
+    return ai;
   }
 }

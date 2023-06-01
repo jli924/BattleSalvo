@@ -154,4 +154,18 @@ public class BattleSalvoView {
       System.out.println("Something broke...");
     }
   }
+
+  /**
+   * Notifies the user that the game is over
+   */
+  public void gameOver(String reason) {
+    try {
+      this.output.append("------------------------------------------------------\n");
+      this.output.append("Game Over!\n");
+      this.output.append(reason + "\n");
+      this.output.append("------------------------------------------------------\n");
+    } catch (IOException e) {
+      System.out.println("Something broke...");
+    }
+  }
 }

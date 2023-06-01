@@ -1,16 +1,19 @@
 package cs3500.pa03;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import cs3500.pa03.model.Board;
 import cs3500.pa03.model.Coord;
 import cs3500.pa03.model.Ship;
 import cs3500.pa03.model.ShipType;
-import cs3500.pa03.view.BattleSalvoView;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
-import javax.swing.text.View;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -21,6 +24,13 @@ public class BoardTest {
   Board board = new Board(6, 7, random);
   Coord coord = new Coord(4, 5);
   List<Ship> ships = new ArrayList<>();
+  List<Coord> hits = new ArrayList<>(
+      Arrays.asList(new Coord(0, 0), new Coord(1, 1)));
+
+  List<Coord> hitsThatHit = new ArrayList<>(List.of(new Coord(0, 0)));
+  Map<ShipType, Integer> specifications = new HashMap<>();
+  List<Ship> shipsPlaced =
+      new ArrayList<>(List.of(new Ship(ShipType.SUBMARINE, hitsThatHit, false)));
 
   /**
    * To test the initBoard method in Board
@@ -28,8 +38,17 @@ public class BoardTest {
   @Test
   public void testInitBoard() {
     board.initBoard();
-    assertEquals(board.getBoard()[0][0], "*");
-    assertEquals(board.getBoard()[5][5], "*");
+    assertEquals("*", board.getBoard()[0][0]);
+    assertEquals("*", board.getBoard()[5][5]);
+  }
+
+  /**
+   * To test the replaceAtCoord method in Board
+   */
+  @Test
+  public void testReplaceAtCoord() {
+    board.replaceAtCoord(coord, "hi!");
+    assertEquals("hi!", board.getBoard()[4][5]);
   }
 
   /**
@@ -68,12 +87,21 @@ public class BoardTest {
   }
 
   /**
+   * To test the updateDamage method in Board
+   */
+  @Test
+  public void testUpdateDamage() {
+    board.placeShipVertically(0, 0, ShipType.CARRIER, ships);
+    assertEquals(hitsThatHit.get(0).getX(), board.updateDamage(hits).get(0).getX());
+  }
+
+  /**
    * To test the placeShipVertically method in Board
    */
   @Test
   public void testPlaceShipVertically() {
-    assertEquals(true, board.placeShipVertically(0, 0, ShipType.CARRIER, ships));
-    assertEquals(false, board.placeShipVertically(0, 0, ShipType.CARRIER, ships));
+    assertTrue(board.placeShipVertically(0, 0, ShipType.CARRIER, ships));
+    assertFalse(board.placeShipVertically(0, 0, ShipType.CARRIER, ships));
   }
 
   /**
@@ -81,9 +109,20 @@ public class BoardTest {
    */
   @Test
   public void testPlaceShipHorizontally() {
-    assertEquals(true, board.placeShipHorizontally(4, 5, ShipType.SUBMARINE, ships));
-    assertEquals(true, board.placeShipHorizontally(0, 0, ShipType.CARRIER, ships));
-    assertEquals(false,
-        board.placeShipHorizontally(4, 6, ShipType.DESTROYER, ships));
+    assertTrue(board.placeShipHorizontally(4, 5, ShipType.SUBMARINE, ships));
+    assertTrue(board.placeShipHorizontally(0, 0, ShipType.CARRIER, ships));
+    assertFalse(board.placeShipHorizontally(4, 6, ShipType.DESTROYER, ships));
+  }
+
+  /**
+   * To test the placeShip method in Board
+   */
+  @Test
+  public void testPlaceShip() {
+    specifications.put(ShipType.CARRIER, 0);
+    specifications.put(ShipType.BATTLESHIP, 0);
+    specifications.put(ShipType.DESTROYER, 0);
+    specifications.put(ShipType.SUBMARINE, 1);
+    assertEquals(shipsPlaced.get(0).shipType, board.placeShip(specifications).get(0).shipType);
   }
 }

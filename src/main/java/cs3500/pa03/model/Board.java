@@ -47,6 +47,18 @@ public class Board {
   }
 
   /**
+   * Replaces a string at a coord on the board
+   *
+   * @param coord the coord that you want to replace
+   * @param replacement the replacement for the string
+   */
+  public void replaceAtCoord(Coord coord, String replacement) {
+    int x = coord.getX();
+    int y = coord.getY();
+    board[x][y] = replacement;
+  }
+
+  /**
    * Gets board
    *
    * @return an array representing the board
@@ -97,6 +109,7 @@ public class Board {
           board[coord.getX()][coord.getY()].equals("D") ||
           board[coord.getX()][coord.getY()].equals("S")) {
         hits.add(coord);
+        coord.hit();
         board[coord.getX()][coord.getY()] = "X";
       } else if (board[coord.getX()][coord.getY()].equals("*")){
         board[coord.getX()][coord.getY()] = "0";

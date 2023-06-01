@@ -1,6 +1,7 @@
 package cs3500.pa03.controller;
 
 import cs3500.pa03.model.BattleSalvoModel;
+import cs3500.pa03.model.GameResult;
 import cs3500.pa03.view.BattleSalvoView;
 import java.io.InputStreamReader;
 import java.util.Scanner;
@@ -12,15 +13,27 @@ public class BattleSalvoController {
   BattleSalvoModel model;
   BattleSalvoView view;
   Readable input;
-  int fleetSize;
+  int userFleetSize;
+  int aiFleetSize;
 
   /**
    * Constructor
    */
   public BattleSalvoController() {
-    this.model = new BattleSalvoModel();
     this.view = new BattleSalvoView(System.out);
     this.input = new InputStreamReader(System.in);
+  }
+
+  public void gameOver() {
+    int userShots = model.getUser().takeShots().size();
+    int aiShots = model.getAi().takeShots().size();
+    if (userShots == 0 && aiShots > 0) {
+      model.getUser().endGame(GameResult.LOST, "You lose! :(");
+    } else if (aiShots == 0 && userShots > 0) {
+      model.getUser().endGame(GameResult.WON, "You win! :)");
+    } else {
+      model.getUser().endGame(GameResult.DRAW, "Draw! :)");
+    }
   }
 
   /**
@@ -72,8 +85,8 @@ public class BattleSalvoController {
       view.invalidBoardDimensions();
       return false;
     } else {
-      model.setBoard(boardHeight, boardWidth);
-      fleetSize = Math.min(boardHeight, boardWidth);
+      model = new BattleSalvoModel(boardHeight, boardWidth);
+      userFleetSize = Math.min(boardHeight, boardWidth);
       return true;
     }
   }
@@ -99,19 +112,18 @@ public class BattleSalvoController {
       numOfDestroyer = Integer.parseInt(destroyer);
       numOfSubmarine = Integer.parseInt(submarine);
     } catch (NumberFormatException e) {
-      view.invalidFleetSize(fleetSize);
+      view.invalidFleetSize(userFleetSize);
       return false;
     }
-    if (numOfCarrier + numOfBattleship + numOfDestroyer + numOfSubmarine > fleetSize) {
-      view.invalidFleetSize(fleetSize);
+    if (numOfCarrier + numOfBattleship + numOfDestroyer + numOfSubmarine > userFleetSize) {
+      view.invalidFleetSize(userFleetSize);
       return false;
     } else if (numOfCarrier == 0 || numOfBattleship == 0
         || numOfDestroyer == 0 || numOfSubmarine == 0) {
-      view.atLeastOneOfEachShip(fleetSize);
+      view.atLeastOneOfEachShip(userFleetSize);
       return false;
     } else {
       model.setUpShips(numOfCarrier, numOfBattleship, numOfDestroyer, numOfSubmarine);
-      //model.setShots();
       return true;
     }
   }
@@ -128,27 +140,37 @@ public class BattleSalvoController {
       validInput = checkBoardDimensions(sc.next(), sc.next());
     }
     validInput = false;
-    view.askForFleetSize(fleetSize);
+    view.askForFleetSize(userFleetSize);
     while (!validInput) {
       validInput= checkFleetSize(sc.next(), sc.next(), sc.next(), sc.next());
     }
     validInput = false;
-    // start the loop for the game!
     view.showOpponentBoard(model.getAiBoard());
     view.showMyBoard(model.getUserBoard());
-    view.requestShots(model.getNumOfShots());
+    view.requestShots(model.getUserNumOfShots());
     while (!validInput) {
-      for (int i = 0; i < model.getNumOfShots(); i++) {
+      for (int i = 0; i < model.getUserNumOfShots(); i++) {
         validInput = handleShots(sc.next(), sc.next());
       }
     }
-    validInput = false;
     model.reportPlayerDamage();
+    // start the loop for the game!
+    validInput = false;
+//    while (userFleetSize > 0 && aiFleetSize > 0) {
+//      view.showOpponentBoard(model.getAiBoard());
+//      view.showMyBoard(model.getUserBoard());
+//      view.requestShots(model.getUserNumOfShots());
+//      while (!validInput) {
+//        for (int i = 0; i < model.getUserNumOfShots(); i++) {
+//          validInput = handleShots(sc.next(), sc.next());
+//          userFleetSize = model.getUserNumOfShots();
+//          aiFleetSize = model.getAiNumOfShots();
+//        }
+//      }
+//      model.reportPlayerDamage();
+//    }
+    //gameOver();
     // end the loop for the game!
     // end result code here!
-    view.showOpponentBoard(model.getAiBoard());
-    view.showMyBoard(model.getUserBoard());
-    view.requestShots(model.getNumOfShots());
-    // here, make a loop to let the players play until one lose!
   }
 }
