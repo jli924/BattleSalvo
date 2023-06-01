@@ -119,7 +119,7 @@ public class Board {
     ArrayList<Coord> coords = new ArrayList<>();
     boolean foundSpace = false;
     boolean spaceForShip = true;
-    if (x + shipType.size < this.height) {
+    if (x + shipType.size <= this.height) {
       for (int i = 0; i < shipType.size; i++) {
         if (!board[x + i][y].equals("*")) {
           spaceForShip = false;
@@ -134,7 +134,7 @@ public class Board {
         ships.add(new Ship(shipType, coords, false));
         foundSpace = true;
       }
-    } else if (x >= 5) {
+    } else if (shipType.size - x <= 1) {
       spaceForShip = true;
       for (int i = 0; i < shipType.size; i++) {
         if (!board[x - i][y].equals("*")) {
@@ -168,7 +168,7 @@ public class Board {
     ArrayList<Coord> coords = new ArrayList<>();
     boolean foundSpace = false;
     boolean spaceForShip = true;
-    if (y + shipType.size < this.width) {
+    if (y + shipType.size <= this.width) {
       for (int i = 0; i < shipType.size; i++) {
         if (!board[x][y + i].equals("*")) {
           spaceForShip = false;
@@ -184,7 +184,7 @@ public class Board {
         foundSpace = true;
       }
     }
-     else if (y >= 5) {
+     else if (shipType.size - y <= 0) {
       spaceForShip = true;
 
       for (int i = 0; i < shipType.size; i++) {
