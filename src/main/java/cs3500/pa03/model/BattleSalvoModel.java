@@ -8,8 +8,8 @@ import java.util.HashMap;
  * BattleSalvo's model, manages functionality!
  */
 public class BattleSalvoModel {
-  AiPlayer ai = new AiPlayer();
-  UserPlayer user = new UserPlayer(ai.getAiBoard());
+  AiPlayer ai;
+  UserPlayer user;
   Board board;
   private HashMap<ShipType, Integer> specifications = new HashMap<>();
 
@@ -21,8 +21,10 @@ public class BattleSalvoModel {
    */
   public void setBoard(int height, int width) {
     board = new Board(height, width);
-    user.updateBoards(height, width);
-    ai.updateBoards(height, width);
+    user = new UserPlayer(height, width);
+    ai = new AiPlayer(height, width);
+//    user.updateBoards(height, width);
+//    ai.updateBoards(height, width);
   }
 
   /**
@@ -75,17 +77,17 @@ public class BattleSalvoModel {
    */
   public void setUpShips(int carrier, int battleship, int destroyer, int submarine) {
     setSpecifications(carrier, battleship, destroyer, submarine);
-    user.setShips(board.getHeight(), board.getWidth(), specifications);
-    ai.setShips(board.getHeight(), board.getWidth(), specifications);
+    user.setup(board.getHeight(), board.getWidth(), specifications);
+    ai.setup(board.getHeight(), board.getWidth(), specifications);
   }
 
-  /**
-   * Sets the number of shots for both players
-   */
-  public void setShots() {
-    user.setNumOfShots(user.getShips());
-    ai.setNumOfShots(ai.getShips());
-  }
+//  /**
+//   * Sets the number of shots for both players
+//   */
+//  public void setShots() {
+//    user.setNumOfShots(user.getShips());
+//    ai.setNumOfShots(ai.getShips());
+//  }
 
   /**
    * Get the player's number of shots
@@ -93,7 +95,8 @@ public class BattleSalvoModel {
    * @return the number of shots
    */
   public int getNumOfShots() {
-    return user.getNumOfShots();
+    return user.setup(board.getHeight(), board.getWidth(), specifications).size();
+//    return user.getNumOfShots();
   }
 
   /**
@@ -104,6 +107,12 @@ public class BattleSalvoModel {
    */
   public void handleShots(int x, int y) {
     user.takeShots().add(new Coord(x, y));
+  }
+
+  /**
+   * Reports both player's damage
+   */
+  public void reportPlayerDamage() {
     user.reportDamage(ai.takeShots());
     ai.reportDamage(user.takeShots());
   }

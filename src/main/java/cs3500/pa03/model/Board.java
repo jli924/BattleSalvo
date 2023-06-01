@@ -99,7 +99,7 @@ public class Board {
         hits.add(coord);
         board[coord.getX()][coord.getY()] = "X";
       } else if (board[coord.getX()][coord.getY()].equals("*")){
-        board[coord.getX()][coord.getY()] = "O";
+        board[coord.getX()][coord.getY()] = "0";
       }
     }
     return hits;

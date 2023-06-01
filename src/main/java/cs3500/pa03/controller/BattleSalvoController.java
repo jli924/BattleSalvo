@@ -111,7 +111,7 @@ public class BattleSalvoController {
       return false;
     } else {
       model.setUpShips(numOfCarrier, numOfBattleship, numOfDestroyer, numOfSubmarine);
-      model.setShots();
+      //model.setShots();
       return true;
     }
   }
@@ -133,6 +133,7 @@ public class BattleSalvoController {
       validInput= checkFleetSize(sc.next(), sc.next(), sc.next(), sc.next());
     }
     validInput = false;
+    // start the loop for the game!
     view.showOpponentBoard(model.getAiBoard());
     view.showMyBoard(model.getUserBoard());
     view.requestShots(model.getNumOfShots());
@@ -142,7 +143,12 @@ public class BattleSalvoController {
       }
     }
     validInput = false;
+    model.reportPlayerDamage();
+    // end the loop for the game!
+    // end result code here!
+    view.showOpponentBoard(model.getAiBoard());
+    view.showMyBoard(model.getUserBoard());
+    view.requestShots(model.getNumOfShots());
     // here, make a loop to let the players play until one lose!
-    // AI shots aren't being taken correctly FYI
   }
 }

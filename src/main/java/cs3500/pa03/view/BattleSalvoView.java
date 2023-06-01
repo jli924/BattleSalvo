@@ -47,11 +47,11 @@ public class BattleSalvoView {
    */
   public void askForFleetSize(int fleetSize) {
     try {
-      this.output.append("------------------------------------------------------\n"
-          + "Please enter your fleet in the order:\n" +
-          "[Carrier, Battleship, Destroyer, Submarine].\n" +
-          "Remember, your fleet may not exceed size " + fleetSize + ".\n"
-          + "------------------------------------------------------\n");
+      this.output.append("------------------------------------------------------\n");
+      this.output.append("Please enter your fleet in the order:\n");
+      this.output.append("[Carrier, Battleship, Destroyer, Submarine].\n");
+      this.output.append("Remember, your fleet may not exceed size " + fleetSize + ".\n");
+      this.output.append("------------------------------------------------------\n");
     } catch (IOException e) {
       System.out.println("Something broke...");
     }
@@ -62,11 +62,13 @@ public class BattleSalvoView {
    */
   public void invalidFleetSize(int fleetSize) {
     try {
-      this.output.append("------------------------------------------------------\n"
-          + "You entered invalid fleet sizes!\nPlease remember that your fleet cannot"
-          + " exceed size " + fleetSize + "."
-          + "\nTry again! :)\n"
-          + "------------------------------------------------------\n");
+      this.output.append("------------------------------------------------------\n");
+      this.output.append("You entered invalid fleet sizes!\n");
+      this.output.append("Please remember that your fleet cannot exceed size ");
+      this.output.append(fleetSize + ".");
+      this.output.append("\nIf you believe that you entered a valid fleet size,\n");
+      this.output.append("please check and then try again! :)\n");
+      this.output.append("------------------------------------------------------\n");
     } catch (IOException e) {
       System.out.println("Something broke...");
     }

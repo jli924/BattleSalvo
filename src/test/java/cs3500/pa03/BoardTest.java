@@ -39,7 +39,7 @@ public class BoardTest {
   public void testGetBoard() {
     board.initBoard();
     assertEquals(board.getBoard()[0][0], "*");
-    assertEquals(board.getBoard()[5][7], "*");
+    assertEquals(board.getBoard()[5][6], "*");
   }
 
   /**
