@@ -2,7 +2,6 @@ package cs3500.pa03.model;
 
 import cs3500.pa03.model.player.AbstractPlayer;
 import cs3500.pa03.model.player.AiPlayer;
-import cs3500.pa03.model.player.Player;
 import cs3500.pa03.model.player.UserPlayer;
 import java.util.HashMap;
 
