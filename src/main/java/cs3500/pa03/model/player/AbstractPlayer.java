@@ -15,7 +15,6 @@ import java.util.Map;
  */
 abstract class AbstractPlayer implements Player {
   Board board;
-  //int numOfShots = 0;
   Board opponentBoard;
   List<Ship> ships = new ArrayList<>();
   List<Coord> shotsTaken = new ArrayList<>();
@@ -25,56 +24,9 @@ abstract class AbstractPlayer implements Player {
     this.opponentBoard = opponentBoard;
   }
 
-//  /**
-//   * To get a player's board (the array, board)
-//   *
-//   * @return an array (the board)
-//   */
-//  public String[][] getBoard() {
-//    return board.getBoard();
-//  }
-
-//  /**
-//   * To set the number of shots a player has
-//   *
-//   * @param ships the list of ships that a player has
-//   */
-//  public void setNumOfShots(List<Ship> ships) {
-//    for (Ship ship : ships) {
-//      if (!ship.isSunk()) {
-//        this.numOfShots++;
-//      }
-//    }
-//  }
-
-//  /**
-//   * To get the number of shots a user has
-//   *
-//   * @return an int of the number of shots a player has
-//   */
-//  public int getNumOfShots() {
-//    return numOfShots;
-//  }
-
-//  /**
-//   * To get the list of ships a user has
-//   *
-//   * @return that list of ships
-//   */
-//  public List<Ship> getShips() {
-//    return this.ships;
-//  }
-
-//  /**
-//   * To set the list of ships for a player
-//   *
-//   * @param height the height of the board
-//   * @param width the width of the board
-//   * @param specifications the map of ships to how many the user selected
-//   */
-//  public void setShips(int height, int width, Map<ShipType, Integer> specifications) {
-//    this.ships = setup(height, width, specifications);
-//  }
+  public int getShips() {
+    return ships.size();
+  }
 
   /**
    * Get the player's name.
@@ -110,12 +62,11 @@ abstract class AbstractPlayer implements Player {
    */
   @Override
   public List<Coord> takeShots() {
-    List<Coord> shots;
+    List<Coord> shots = new ArrayList<>();
     for (int i = 0; i < this.ships.size(); i++) {
-      shotsTaken.add(board.takeRandomShot());
+      shots.add(board.takeRandomShot());
     }
-    shots = shotsTaken;
-    shotsTaken.clear();
+    shotsTaken = shots;
     return shots;
   }
 
@@ -130,9 +81,19 @@ abstract class AbstractPlayer implements Player {
   @Override
   public List<Coord> reportDamage(List<Coord> opponentShotsOnBoard) {
     List<Coord> shotsHit = board.updateDamage(opponentShotsOnBoard);
-    for (Ship ship : ships) {
-      if (ship.checkIfSunk()) {
-        ships.remove(ship);
+    for (Coord coord : shotsHit) {
+      for (Ship ship : ships) {
+        for (Coord coord1 : ship.getCoords()) {
+          if (coord1.getX() == coord.getX()
+          && coord1.getY() == coord.getY()) {
+            coord1.hit();
+          }
+        }
+      }
+    }
+    for (int i = 0; i < ships.size(); i++) {
+      if (ships.get(i).checkIfSunk()) {
+        ships.remove(ships.get(i));
       }
     }
     return shotsHit;
@@ -149,7 +110,7 @@ abstract class AbstractPlayer implements Player {
     for (Coord coord : shotsTaken) {
       if (shotsThatHitOpponentShips.contains(coord)) {
         opponentBoard.replaceAtCoord(coord, "X");
-      } else {
+      } else if (!opponentBoard.getBoard()[coord.getX()][coord.getY()].equals("X")) {
         opponentBoard.replaceAtCoord(coord, "0");
       }
     }

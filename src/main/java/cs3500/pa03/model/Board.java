@@ -144,7 +144,8 @@ public class Board {
           board[x + i][y] = shipType.symbol;
           coords.add(new Coord(x + i, y));
         }
-        ships.add(new Ship(shipType, coords, false));
+        ships.add(new Ship(shipType, coords));
+        coords = new ArrayList<>();
         foundSpace = true;
       }
     } else if (shipType.size - x <= 1) {
@@ -160,7 +161,8 @@ public class Board {
           board[x - i][y] = shipType.symbol;
           coords.add(new Coord(x - i, y));
         }
-        ships.add(new Ship(shipType, coords, false));
+        ships.add(new Ship(shipType, coords));
+        coords = new ArrayList<>();
         foundSpace = true;
       }
     }
@@ -193,7 +195,8 @@ public class Board {
           board[x][y + i] = shipType.symbol;
           coords.add(new Coord(x, y + i));
         }
-        ships.add(new Ship(shipType, coords, false));
+        ships.add(new Ship(shipType, coords));
+        coords = new ArrayList<>();
         foundSpace = true;
       }
     }
@@ -211,7 +214,8 @@ public class Board {
           board[x][y - i] = shipType.symbol;
           coords.add(new Coord(x, y - i));
         }
-        ships.add(new Ship(shipType, coords, false));
+        ships.add(new Ship(shipType, coords));
+        coords = new ArrayList<>();
         foundSpace = true;
       }
     }

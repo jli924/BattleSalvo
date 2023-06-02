@@ -30,7 +30,7 @@ public class BoardTest {
   List<Coord> hitsThatHit = new ArrayList<>(List.of(new Coord(0, 0)));
   Map<ShipType, Integer> specifications = new HashMap<>();
   List<Ship> shipsPlaced =
-      new ArrayList<>(List.of(new Ship(ShipType.SUBMARINE, hitsThatHit, false)));
+      new ArrayList<>(List.of(new Ship(ShipType.SUBMARINE, hitsThatHit)));
 
   /**
    * To test the initBoard method in Board

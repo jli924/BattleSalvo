@@ -10,15 +10,6 @@ public class AiPlayer extends AbstractPlayer {
     super(board, opponentBoard);
   }
 
-//  /**
-//   * Get the AI's board
-//   *
-//   * @return the board
-//   */
-//  public Board getAiBoard() {
-//    return board;
-//  }
-
   /**
    * Get the player's name.
    *

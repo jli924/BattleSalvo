@@ -87,6 +87,7 @@ public class BattleSalvoController {
     } else {
       model = new BattleSalvoModel(boardHeight, boardWidth);
       userFleetSize = Math.min(boardHeight, boardWidth);
+      aiFleetSize = Math.min(boardHeight, boardWidth);
       return true;
     }
   }
@@ -144,32 +145,21 @@ public class BattleSalvoController {
     while (!validInput) {
       validInput= checkFleetSize(sc.next(), sc.next(), sc.next(), sc.next());
     }
-    validInput = false;
-    view.showOpponentBoard(model.getAiBoard());
-    view.showMyBoard(model.getUserBoard());
-    view.requestShots(model.getUserNumOfShots());
-    while (!validInput) {
-      for (int i = 0; i < model.getUserNumOfShots(); i++) {
-        validInput = handleShots(sc.next(), sc.next());
+    while (userFleetSize > 0 && aiFleetSize > 0) {
+      view.showOpponentBoard(model.getAiBoard());
+      view.showMyBoard(model.getUserBoard());
+      view.requestShots(model.getUserNumOfShots());
+      validInput = false;
+      while (!validInput) {
+        for (int i = 0; i < model.getUserNumOfShots(); i++) {
+          validInput = handleShots(sc.next(), sc.next());
+        }
       }
+//      userFleetSize = model.getUserNumOfShots();
+//      aiFleetSize = model.getAiNumOfShots();
+      model.reportPlayerDamage();
     }
-    model.reportPlayerDamage();
-    // start the loop for the game!
-    validInput = false;
-//    while (userFleetSize > 0 && aiFleetSize > 0) {
-//      view.showOpponentBoard(model.getAiBoard());
-//      view.showMyBoard(model.getUserBoard());
-//      view.requestShots(model.getUserNumOfShots());
-//      while (!validInput) {
-//        for (int i = 0; i < model.getUserNumOfShots(); i++) {
-//          validInput = handleShots(sc.next(), sc.next());
-//          userFleetSize = model.getUserNumOfShots();
-//          aiFleetSize = model.getAiNumOfShots();
-//        }
-//      }
-//      model.reportPlayerDamage();
-//    }
-    //gameOver();
+    gameOver();
     // end the loop for the game!
     // end result code here!
   }

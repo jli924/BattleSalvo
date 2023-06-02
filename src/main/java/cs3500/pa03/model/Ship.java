@@ -13,7 +13,7 @@ public class Ship {
   /**
    * Constructor
    */
-  public Ship(ShipType shipType, List<Coord> coords, boolean sunk) {
+  public Ship(ShipType shipType, List<Coord> coords) {
     this.shipType = shipType;
     this.coords = coords;
   }
@@ -30,5 +30,18 @@ public class Ship {
       }
     }
     return true;
+  }
+
+  public List<Coord> getCoords() {
+    return coords;
+  }
+
+  public Ship getShipAt(Coord coord) {
+    for (Coord c : coords) {
+      if (c.x == coord.x && c.y == coord.y) {
+        return this;
+      }
+    }
+    throw new RuntimeException("I can't find that Coord!");
   }
 }

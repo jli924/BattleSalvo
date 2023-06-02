@@ -14,6 +14,8 @@ public class BattleSalvoModel {
   Board userBoard;
   Board opponentBoard;
   Board aiBoard;
+  int userShots;
+  int aiShots;
   GameResult result;
   private HashMap<ShipType, Integer> specifications = new HashMap<>();
   public BattleSalvoModel(int height, int width) {
@@ -84,7 +86,9 @@ public class BattleSalvoModel {
    * @return the number of shots
    */
   public int getUserNumOfShots() {
+    //return user.getShips();
     return user.setup(userBoard.getHeight(), userBoard.getWidth(), specifications).size();
+    //return user.takeShots().size();
   }
 
   /**
@@ -93,7 +97,8 @@ public class BattleSalvoModel {
    * @return the number of shots
    */
   public int getAiNumOfShots() {
-    return ai.takeShots().size();
+    return ai.setup(aiBoard.getHeight(), aiBoard.getWidth(), specifications).size();
+    //return ai.takeShots().size();
   }
 
   /**

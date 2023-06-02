@@ -2,6 +2,7 @@ package cs3500.pa03.model.player;
 
 import cs3500.pa03.model.Board;
 import cs3500.pa03.model.Coord;
+import cs3500.pa03.model.Ship;
 import java.util.List;
 
 /**
@@ -12,11 +13,6 @@ public class UserPlayer extends AbstractPlayer {
   /**
    * Constructor
    */
-//  public UserPlayer(Board opponentBoard) {
-//    super();
-//    this.opponentBoard = opponentBoard;
-//  }
-
   public UserPlayer(Board board, Board opponentBoard) {
     super(board, opponentBoard);
   }
