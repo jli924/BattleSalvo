@@ -14,7 +14,8 @@ import java.util.Map;
  */
 public abstract class AbstractPlayer implements Player {
   Board board;
-  Board opponentBoard;
+  // public for testing
+  public Board opponentBoard;
   List<Ship> ships = new ArrayList<>();
   List<Coord> shotsTaken = new ArrayList<>();
   boolean firstEntry = true;

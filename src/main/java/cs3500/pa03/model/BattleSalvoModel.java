@@ -10,11 +10,12 @@ import java.util.HashMap;
  */
 public class BattleSalvoModel {
   AbstractPlayer ai;
-  AbstractPlayer user;
+  // made public for testing :(
+  public AbstractPlayer user;
   Board userBoard;
   Board opponentBoard;
   Board aiBoard;
-  private HashMap<ShipType, Integer> specifications = new HashMap<>();
+  public HashMap<ShipType, Integer> specifications = new HashMap<>();
   public BattleSalvoModel(int height, int width) {
     userBoard = new Board(height, width);
     opponentBoard = new Board(height, width);
@@ -56,7 +57,7 @@ public class BattleSalvoModel {
    * @param destroyer the number of destroyers the user chose
    * @param submarine the number of submarines the user chose
    */
-  private void setSpecifications(int carrier, int battleship, int destroyer, int submarine) {
+  public void setSpecifications(int carrier, int battleship, int destroyer, int submarine) {
     specifications.put(ShipType.CARRIER, carrier);
     specifications.put(ShipType.BATTLESHIP, battleship);
     specifications.put(ShipType.DESTROYER, destroyer);
@@ -83,9 +84,7 @@ public class BattleSalvoModel {
    * @return the number of shots
    */
   public int getUserNumOfShots() {
-    //return user.getShips();
     return user.setup(userBoard.getHeight(), userBoard.getWidth(), specifications).size();
-    //return user.takeShots().size();
   }
 
   /**
