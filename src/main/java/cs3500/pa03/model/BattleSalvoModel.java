@@ -1,5 +1,6 @@
 package cs3500.pa03.model;
 
+import cs3500.pa03.model.player.AbstractPlayer;
 import cs3500.pa03.model.player.AiPlayer;
 import cs3500.pa03.model.player.Player;
 import cs3500.pa03.model.player.UserPlayer;
@@ -9,14 +10,11 @@ import java.util.HashMap;
  * BattleSalvo's model, manages functionality!
  */
 public class BattleSalvoModel {
-  AiPlayer ai;
-  UserPlayer user;
+  AbstractPlayer ai;
+  AbstractPlayer user;
   Board userBoard;
   Board opponentBoard;
   Board aiBoard;
-  int userShots;
-  int aiShots;
-  GameResult result;
   private HashMap<ShipType, Integer> specifications = new HashMap<>();
   public BattleSalvoModel(int height, int width) {
     userBoard = new Board(height, width);
@@ -98,7 +96,6 @@ public class BattleSalvoModel {
    */
   public int getAiNumOfShots() {
     return ai.setup(aiBoard.getHeight(), aiBoard.getWidth(), specifications).size();
-    //return ai.takeShots().size();
   }
 
   /**
@@ -117,13 +114,5 @@ public class BattleSalvoModel {
   public void reportPlayerDamage() {
     user.successfulHits(ai.reportDamage(user.takeShots()));
     ai.successfulHits(user.reportDamage(ai.takeShots()));
-  }
-
-  public Player getUser() {
-    return user;
-  }
-
-  public Player getAi() {
-    return ai;
   }
 }

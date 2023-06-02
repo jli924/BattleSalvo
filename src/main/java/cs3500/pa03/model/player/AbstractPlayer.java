@@ -5,7 +5,6 @@ import cs3500.pa03.model.Coord;
 import cs3500.pa03.model.GameResult;
 import cs3500.pa03.model.Ship;
 import cs3500.pa03.model.ShipType;
-import cs3500.pa03.view.BattleSalvoView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,19 +12,15 @@ import java.util.Map;
 /**
  * To represent a player
  */
-abstract class AbstractPlayer implements Player {
+public abstract class AbstractPlayer implements Player {
   Board board;
   Board opponentBoard;
   List<Ship> ships = new ArrayList<>();
   List<Coord> shotsTaken = new ArrayList<>();
-  BattleSalvoView view = new BattleSalvoView(System.out);
+  boolean firstEntry = true;
   public AbstractPlayer(Board board, Board opponentBoard) {
     this.board = board;
     this.opponentBoard = opponentBoard;
-  }
-
-  public int getShips() {
-    return ships.size();
   }
 
   /**
@@ -48,7 +43,8 @@ abstract class AbstractPlayer implements Player {
    */
   @Override
   public List<Ship> setup(int height, int width, Map<ShipType, Integer> specifications) {
-    if (this.ships.size() == 0) {
+    if (firstEntry) {
+      firstEntry = false;
       this.ships = board.placeShip(specifications);
     }
     return this.ships;
@@ -125,6 +121,6 @@ abstract class AbstractPlayer implements Player {
    */
   @Override
   public void endGame(GameResult result, String reason) {
-    view.gameOver(reason);
+    // left empty, Fontenot said not used for PA03
   }
 }

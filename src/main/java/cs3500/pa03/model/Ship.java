@@ -32,16 +32,13 @@ public class Ship {
     return true;
   }
 
+  /**
+   * Returns the coordinate list of a ship
+   *
+   * @return the coords of the ship
+   */
   public List<Coord> getCoords() {
     return coords;
   }
 
-  public Ship getShipAt(Coord coord) {
-    for (Coord c : coords) {
-      if (c.x == coord.x && c.y == coord.y) {
-        return this;
-      }
-    }
-    throw new RuntimeException("I can't find that Coord!");
-  }
 }

@@ -25,14 +25,14 @@ public class BattleSalvoController {
   }
 
   public void gameOver() {
-    int userShots = model.getUser().takeShots().size();
-    int aiShots = model.getAi().takeShots().size();
+    int userShots = model.getUserNumOfShots();
+    int aiShots = model.getAiNumOfShots();
     if (userShots == 0 && aiShots > 0) {
-      model.getUser().endGame(GameResult.LOST, "You lose! :(");
+      view.gameOver("You lose! :(\nAll your ships were sunk!");
     } else if (aiShots == 0 && userShots > 0) {
-      model.getUser().endGame(GameResult.WON, "You win! :)");
+      view.gameOver("You win! :)\nYou sunk all the opponent's ships!");
     } else {
-      model.getUser().endGame(GameResult.DRAW, "Draw! :)");
+      view.gameOver("Draw! :)");
     }
   }
 
@@ -155,10 +155,13 @@ public class BattleSalvoController {
           validInput = handleShots(sc.next(), sc.next());
         }
       }
-//      userFleetSize = model.getUserNumOfShots();
-//      aiFleetSize = model.getAiNumOfShots();
       model.reportPlayerDamage();
+      userFleetSize = model.getUserNumOfShots();
+      aiFleetSize = model.getAiNumOfShots();
     }
+
+    view.showOpponentBoard(model.getAiBoard());
+    view.showMyBoard(model.getUserBoard());
     gameOver();
     // end the loop for the game!
     // end result code here!
