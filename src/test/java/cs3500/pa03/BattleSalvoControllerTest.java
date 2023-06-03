@@ -2,7 +2,6 @@ package cs3500.pa03;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import cs3500.pa03.controller.BattleSalvoController;
 import org.junit.jupiter.api.Test;
 
