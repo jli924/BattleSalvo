@@ -1,7 +1,6 @@
 package cs3500.pa03.controller;
 
 import cs3500.pa03.model.BattleSalvoModel;
-import cs3500.pa03.model.GameResult;
 import cs3500.pa03.view.BattleSalvoView;
 import java.io.InputStreamReader;
 import java.util.Scanner;
@@ -10,8 +9,8 @@ import java.util.Scanner;
  * BattleSalvo's controller
  */
 public class BattleSalvoController {
-  BattleSalvoModel model;
-  BattleSalvoView view;
+  public BattleSalvoModel model;
+  public BattleSalvoView view;
   Readable input;
   int userFleetSize;
   int aiFleetSize;
@@ -24,6 +23,9 @@ public class BattleSalvoController {
     this.input = new InputStreamReader(System.in);
   }
 
+  /**
+   * Handles what to show the user when the game is over
+   */
   public void gameOver() {
     int userShots = model.getUserNumOfShots();
     int aiShots = model.getAiNumOfShots();
@@ -71,7 +73,7 @@ public class BattleSalvoController {
    *
    * @return a boolean whether the input was valid
    */
-  boolean checkBoardDimensions(String height, String width) {
+  public boolean checkBoardDimensions(String height, String width) {
     int boardHeight;
     int boardWidth;
     try {
@@ -102,7 +104,7 @@ public class BattleSalvoController {
    *
    * @return a boolean whether the input was valid
    */
-  boolean checkFleetSize(String carrier, String battleship, String destroyer, String submarine) {
+  public boolean checkFleetSize(String carrier, String battleship, String destroyer, String submarine) {
     int numOfCarrier;
     int numOfBattleship;
     int numOfDestroyer;
@@ -163,7 +165,5 @@ public class BattleSalvoController {
     view.showOpponentBoard(model.getAiBoard());
     view.showMyBoard(model.getUserBoard());
     gameOver();
-    // end the loop for the game!
-    // end result code here!
   }
 }

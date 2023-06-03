@@ -13,12 +13,16 @@ import java.util.Map;
  * To represent a player
  */
 public abstract class AbstractPlayer implements Player {
-  Board board;
+  public Board board;
   // public for testing
   public Board opponentBoard;
   List<Ship> ships = new ArrayList<>();
-  List<Coord> shotsTaken = new ArrayList<>();
+  public List<Coord> shotsTaken = new ArrayList<>();
   boolean firstEntry = true;
+
+  /**
+   * Constructor
+   */
   public AbstractPlayer(Board board, Board opponentBoard) {
     this.board = board;
     this.opponentBoard = opponentBoard;

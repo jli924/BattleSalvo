@@ -6,7 +6,7 @@ import java.io.IOException;
  * Handles what to show the user
  */
 public class BattleSalvoView {
-  Appendable output;
+  public Appendable output;
 
   /**
    * Constructor
@@ -38,7 +38,7 @@ public class BattleSalvoView {
           + " dimensions must be in the range of (6, 15) inclusive.\nTry again! :)\n"
           + "------------------------------------------------------\n");
     } catch (IOException e) {
-      System.out.println("Something broke...");
+      throw new RuntimeException();
     }
   }
 
@@ -53,7 +53,7 @@ public class BattleSalvoView {
       this.output.append("Remember, your fleet may not exceed size " + fleetSize + ".\n");
       this.output.append("------------------------------------------------------\n");
     } catch (IOException e) {
-      System.out.println("Something broke...");
+      throw new RuntimeException();
     }
   }
 
@@ -70,7 +70,7 @@ public class BattleSalvoView {
       this.output.append("please check and then try again! :)\n");
       this.output.append("------------------------------------------------------\n");
     } catch (IOException e) {
-      System.out.println("Something broke...");
+      throw new RuntimeException();
     }
   }
 
@@ -85,7 +85,7 @@ public class BattleSalvoView {
           + "\nTry again! :)\n"
           + "------------------------------------------------------\n");
     } catch (IOException e) {
-      System.out.println("Something broke...");
+      throw new RuntimeException();
     }
   }
 
@@ -105,7 +105,7 @@ public class BattleSalvoView {
       }
       this.output.append("\n");
     } catch (IOException e) {
-      System.out.println("Something broke...");
+      throw new RuntimeException();
     }
   }
 
@@ -124,7 +124,7 @@ public class BattleSalvoView {
       }
       this.output.append("------------------------------------------------------\n");
     } catch (IOException e) {
-      System.out.println("Something broke...");
+      throw new RuntimeException();
     }
   }
 
@@ -136,7 +136,7 @@ public class BattleSalvoView {
       this.output.append("Please enter " + ships + " shots:\n");
       this.output.append("------------------------------------------------------\n");
     } catch (IOException e) {
-      System.out.println("Something broke...");
+      throw new RuntimeException();
     }
   }
 
@@ -151,7 +151,7 @@ public class BattleSalvoView {
       this.output.append("Try again! :)\n");
       this.output.append("------------------------------------------------------\n");
     } catch (IOException e) {
-      System.out.println("Something broke...");
+      throw new RuntimeException();
     }
   }
 
@@ -165,7 +165,7 @@ public class BattleSalvoView {
       this.output.append(reason + "\n");
       this.output.append("------------------------------------------------------\n");
     } catch (IOException e) {
-      System.out.println("Something broke...");
+      throw new RuntimeException();
     }
   }
 }

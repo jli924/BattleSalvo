@@ -102,6 +102,7 @@ public class BoardTest {
   public void testPlaceShipVertically() {
     assertTrue(board.placeShipVertically(0, 0, ShipType.CARRIER, ships));
     assertFalse(board.placeShipVertically(0, 0, ShipType.CARRIER, ships));
+    assertFalse(board.placeShipVertically(5, 0, ShipType.CARRIER, ships));
   }
 
   /**

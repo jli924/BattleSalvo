@@ -19,7 +19,7 @@ public class BattleSalvoModelTest {
    */
   @Test
   public void testGetAiBoard() {
-    assertEquals(board.getBoard().length, model.getAiBoard().length);
+    assertEquals(board.getBoard()[1][2], model.getAiBoard()[2][3]);
   }
 
   /**
@@ -27,7 +27,7 @@ public class BattleSalvoModelTest {
    */
   @Test
   public void testGetUserBoard() {
-    assertEquals(board.getBoard().length, model.getUserBoard().length);
+    assertEquals(board.getBoard()[5][5], model.getUserBoard()[4][5]);
   }
 
   /**
@@ -80,11 +80,11 @@ public class BattleSalvoModelTest {
   }
 
   /**
-   * To test the reportDamage method in BattleSalvoModel
+   * To test the reportPlayerDamage method in BattleSalvoModel
    */
   @Test
-  public void testReportDamage() {
+  public void testReportPlayerDamage() {
     model.reportPlayerDamage();
-    assertEquals(board.getBoard().length, model.user.opponentBoard.getBoard().length);
+    assertEquals(board.getBoard()[3][4], model.user.opponentBoard.getBoard()[5][5]);
   }
 }

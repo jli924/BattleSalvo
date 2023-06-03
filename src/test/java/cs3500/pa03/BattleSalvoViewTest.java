@@ -1,9 +1,11 @@
 package cs3500.pa03;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import cs3500.pa03.model.Board;
 import cs3500.pa03.view.BattleSalvoView;
+import cs3500.pa03.view.BrokenAppendable;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -12,7 +14,9 @@ import org.junit.jupiter.api.Test;
 public class BattleSalvoViewTest {
   Board board = new Board(6, 6);
   StringBuilder stringBuilder = new StringBuilder();
+  Appendable brokenAppendable = new BrokenAppendable();
   BattleSalvoView view = new BattleSalvoView(stringBuilder);
+  BattleSalvoView brokenView = new BattleSalvoView(brokenAppendable);
   String welcomeScreen = "\nWelcome to OOD BattleSalvo!!\n"
       + "Please enter a valid board height and width below:\n"
       + "------------------------------------------------------\n";
@@ -37,24 +41,24 @@ public class BattleSalvoViewTest {
       + " exceed size " + 6 + "."
       + "\nTry again! :)\n"
       + "------------------------------------------------------\n";
-  String opponentBoard = "------------------------------------------------------\n" +
-      "Opponent board:\n" +
-      "     * * * * * * \n" +
-      "     * * * * * * \n" +
-      "     * * * * * * \n" +
-      "     * * * * * * \n" +
-      "     * * * * * * \n" +
-      "     * * * * * * \n\n";
-  String myBoard = "Your board:\n" +
-      "     * * * * * * \n" +
-      "     * * * * * * \n" +
-      "     * * * * * * \n" +
-      "     * * * * * * \n" +
-      "     * * * * * * \n" +
-      "     * * * * * * \n" +
-      "------------------------------------------------------\n";
-  String requestShots = "Please enter " + 5 + " shots:\n" +
-      "------------------------------------------------------\n";
+  String opponentBoard = "------------------------------------------------------\n"
+      + "Opponent board:\n"
+      + "     * * * * * * \n"
+      + "     * * * * * * \n"
+      + "     * * * * * * \n"
+      + "     * * * * * * \n"
+      + "     * * * * * * \n"
+      + "     * * * * * * \n\n";
+  String myBoard = "Your board:\n"
+      + "     * * * * * * \n"
+      + "     * * * * * * \n"
+      + "     * * * * * * \n"
+      + "     * * * * * * \n"
+      + "     * * * * * * \n"
+      + "     * * * * * * \n"
+      + "------------------------------------------------------\n";
+  String requestShots = "Please enter " + 5 + " shots:\n"
+      + "------------------------------------------------------\n";
   String invalidShot = "------------------------------------------------------\n"
       + "You entered an invalid shot!\n"
       + "Remember, shots must be within board dimensions - 1!\n"
@@ -72,6 +76,7 @@ public class BattleSalvoViewTest {
   public void testWelcomeScreen() {
     view.welcomeScreen();
     assertEquals(welcomeScreen, stringBuilder.toString());
+    assertThrows(RuntimeException.class, () -> brokenView.welcomeScreen());
   }
 
   /**
@@ -81,6 +86,7 @@ public class BattleSalvoViewTest {
   public void testInvalidBoardDimensions() {
     view.invalidBoardDimensions();
     assertEquals(invalidBoardDimensions, stringBuilder.toString());
+    assertThrows(RuntimeException.class, () -> brokenView.invalidBoardDimensions());
   }
 
   /**
@@ -90,6 +96,7 @@ public class BattleSalvoViewTest {
   public void testAskForFleetSize() {
     view.askForFleetSize(4);
     assertEquals(askForFleetSize, stringBuilder.toString());
+    assertThrows(RuntimeException.class, () -> brokenView.askForFleetSize(6));
   }
 
   /**
@@ -99,6 +106,7 @@ public class BattleSalvoViewTest {
   public void testInvalidFleetSize() {
     view.invalidFleetSize(5);
     assertEquals(invalidFleetSize, stringBuilder.toString());
+    assertThrows(RuntimeException.class, () -> brokenView.invalidFleetSize(5));
   }
 
   /**
@@ -108,6 +116,7 @@ public class BattleSalvoViewTest {
   public void testAtLeastOneOfEachShip() {
     view.atLeastOneOfEachShip(6);
     assertEquals(atLeastOneOfEachShip, stringBuilder.toString());
+    assertThrows(RuntimeException.class, () -> brokenView.atLeastOneOfEachShip(6));
   }
 
   /**
@@ -118,6 +127,7 @@ public class BattleSalvoViewTest {
     board.initBoard();
     view.showOpponentBoard(board.getBoard());
     assertEquals(opponentBoard, stringBuilder.toString());
+    assertThrows(RuntimeException.class, () -> brokenView.showOpponentBoard(board.getBoard()));
   }
 
   /**
@@ -128,6 +138,7 @@ public class BattleSalvoViewTest {
     board.initBoard();
     view.showMyBoard(board.getBoard());
     assertEquals(myBoard, stringBuilder.toString());
+    assertThrows(RuntimeException.class, () -> brokenView.showMyBoard(board.getBoard()));
   }
 
   /**
@@ -137,6 +148,7 @@ public class BattleSalvoViewTest {
   public void testRequestShots() {
     view.requestShots(5);
     assertEquals(requestShots, stringBuilder.toString());
+    assertThrows(RuntimeException.class, () -> brokenView.requestShots(5));
   }
 
   /**
@@ -146,6 +158,7 @@ public class BattleSalvoViewTest {
   public void testInvalidShot() {
     view.invalidShot();
     assertEquals(invalidShot, stringBuilder.toString());
+    assertThrows(RuntimeException.class, () -> brokenView.invalidShot());
   }
 
   /**
@@ -155,5 +168,6 @@ public class BattleSalvoViewTest {
   public void testGameOver() {
     view.gameOver("testing testing!");
     assertEquals(gameOver, stringBuilder.toString());
+    assertThrows(RuntimeException.class, () -> brokenView.gameOver("testing!"));
   }
 }
