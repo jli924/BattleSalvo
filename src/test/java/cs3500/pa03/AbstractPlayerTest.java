@@ -8,7 +8,6 @@ import cs3500.pa03.model.ShipType;
 import cs3500.pa03.model.player.AbstractPlayer;
 import cs3500.pa03.model.player.AiPlayer;
 import cs3500.pa03.model.player.UserPlayer;
-import cs3500.pa03.view.BattleSalvoView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
