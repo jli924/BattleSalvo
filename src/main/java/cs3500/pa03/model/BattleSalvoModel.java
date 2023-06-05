@@ -3,7 +3,9 @@ package cs3500.pa03.model;
 import cs3500.pa03.model.player.AbstractPlayer;
 import cs3500.pa03.model.player.AiPlayer;
 import cs3500.pa03.model.player.UserPlayer;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * BattleSalvo's model, manages functionality!
@@ -112,5 +114,26 @@ public class BattleSalvoModel {
   public void reportPlayerDamage() {
     user.successfulHits(ai.reportDamage(user.takeShots()));
     ai.successfulHits(user.reportDamage(ai.takeShots()));
+  }
+
+  /**
+   * Checks if a spot at a board has been hit
+   *
+   * @param board the board to be checked
+   * @param shots the shots that the AI has taken
+   *
+   * @return the shots the AI will take again
+   */
+  public List<Coord> checkIfHit(Board board, List<Coord> shots) {
+    for (Coord coord : shots) {
+      if (board.getBoard()[coord.getX()][coord.getY()].equals("X")
+      || board.getBoard()[coord.getX()][coord.getY()].equals("0")) {
+        shots = ai.takeShots();
+        checkIfHit(board, ai.takeShots());
+      } else {
+        shots = ai.takeShots();
+      }
+    }
+    return shots;
   }
 }

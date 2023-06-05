@@ -2,7 +2,6 @@ package cs3500.pa03.model.player;
 
 import cs3500.pa03.model.Board;
 import cs3500.pa03.model.Coord;
-import cs3500.pa03.model.Ship;
 import java.util.List;
 
 /**

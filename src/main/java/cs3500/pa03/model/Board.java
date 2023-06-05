@@ -108,8 +108,8 @@ public class Board {
           board[coord.getX()][coord.getY()].equals("B") ||
           board[coord.getX()][coord.getY()].equals("D") ||
           board[coord.getX()][coord.getY()].equals("S")) {
-        hits.add(coord);
         coord.hit();
+        hits.add(coord);
         board[coord.getX()][coord.getY()] = "X";
       } else if (board[coord.getX()][coord.getY()].equals("*")){
         board[coord.getX()][coord.getY()] = "0";
